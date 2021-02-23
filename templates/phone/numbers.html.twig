@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h1 class="bd-title">Phone numbers</h1>
+
+    <form method="get" id="filter">
+        <div class="row">
+            <div class="col">
+                <select class="form-select" name="country">
+                    <option value="" {% if selectedCountry == '' %}selected="selected"{% endif %}>Select a country</option>
+                    {% for country in countries %}
+                        <option value="{{country}}" {% if selectedCountry == country %}selected="selected"{% endif %}>{{country}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-select" name="valid">
+                    <option value="" {% if selectedValid == '' %}selected="selected"{% endif %}>All</option>
+                    <option value="1" {% if selectedValid == '1' %}selected="selected"{% endif %}>Valid phone number</option>
+                    <option value="2" {% if selectedValid == '2' %}selected="selected"{% endif %}>Invalid phone number</option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>State</th>
+                    <th>Country code</th>
+                    <th>Phone number</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for phoneNumber in phoneNumbers %}
+                    <tr>
+                        <td>{{phoneNumber.country}}</td>
+                        <td>{{phoneNumber.isValid ? 'OK' : 'NOK'}}</td>
+                        <td>{{phoneNumber.countryCode}}</td>
+                        <td>{{phoneNumber.number}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
